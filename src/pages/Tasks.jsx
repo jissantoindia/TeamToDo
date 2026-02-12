@@ -128,6 +128,13 @@ export default function Tasks() {
 
     const filteredTasks = useMemo(() => {
         return tasks.filter(task => {
+            // Filter out tasks with invalid/deleted statuses (orphans)
+            // This ensures List view matches Board view (which only shows valid columns)
+            if (statuses.length > 0) {
+                const isValidStatus = statuses.some(s => s.$id === task.statusId);
+                if (!isValidStatus) return false;
+            }
+
             // Role-based visibility: non-managers see only their own tasks
             if (!isManager) {
                 const isOwn = task.assigneeId === user?.$id;
@@ -144,7 +151,7 @@ export default function Tasks() {
             const matchesPriority = filterPriority === 'all' || task.priority === filterPriority;
             return matchesSearch && matchesAssignee && matchesPriority;
         });
-    }, [tasks, searchQuery, filterAssignee, filterPriority, isManager, user, activeProjectId]);
+    }, [tasks, statuses, searchQuery, filterAssignee, filterPriority, isManager, user, activeProjectId]);
 
     const tasksByStatus = useMemo(() => {
         const grouped = {};
@@ -552,9 +559,9 @@ export default function Tasks() {
                         </div>
                         {activeProject.status && (
                             <span className={`ml-auto inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize ${activeProject.status === 'active' ? 'bg-green-100 text-green-800' :
-                                    activeProject.status === 'completed' ? 'bg-gray-100 text-gray-800' :
-                                        activeProject.status === 'paused' ? 'bg-yellow-100 text-yellow-800' :
-                                            'bg-blue-100 text-blue-800'
+                                activeProject.status === 'completed' ? 'bg-gray-100 text-gray-800' :
+                                    activeProject.status === 'paused' ? 'bg-yellow-100 text-yellow-800' :
+                                        'bg-blue-100 text-blue-800'
                                 }`}>{activeProject.status}</span>
                         )}
                     </div>
