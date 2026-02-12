@@ -132,7 +132,7 @@ export default async ({ req, res, log, error }) => {
 
     const env = process.env;
     const teamName = env.TEAM_NAME || 'EBSGL';
-    const appUrl = env.APP_URL || 'http://localhost:5173';
+    const appUrl = env.APP_URL || 'https://ebsteqrix.com';
 
     let body;
     try {
