@@ -130,7 +130,7 @@ export default function AITaskCreator() {
 
             const timeMode = TIME_MODES.find(m => m.id === timeAllocation) || TIME_MODES[2];
 
-            const prompt = `You are a professional project manager. Analyze this proposal PDF and break it down into individual development tasks.
+            const prompt = `You are a professional project manager. Analyze this proposal PDF and break it down into individual development tasks SPECIFICALLY for the "${stackName}" technology stack.
 
 Context:
 - Technology Stack: ${stackName}${stackDescription ? `\n  Stack Details: ${stackDescription}` : ''}
@@ -138,24 +138,24 @@ Context:
 - Project Start Date: ${startDate}
 - Time Allocation Mode: ${timeMode.label} — ${timeMode.promptHint}
 
-Generate a comprehensive list of development tasks. For each task, provide:
-1. title: A clear, concise task title
-2. description: Detailed description of what needs to be done
+CRITICAL RULES:
+1. **FILTER BY STACK**: Create tasks ONLY for ${stackName}.
+   - If stack is "Flutter" or "Mobile", generate ONLY mobile app tasks (screens, widgets, API integration). IGNORE backend, database creation, or web admin panels.
+   - If stack is "React", "Vue", or "Angular", generate ONLY frontend web tasks. IGNORE backend/mobile.
+   - If stack is "Node", "Laravel", "Python", "Go", generate ONLY backend/API/database tasks. IGNORE frontend UI.
+2. **TIME REDUCTION**: Follow the Time Allocation Mode strictly. If "Wipe Coding" is selected, assume AI does 90% of the work. Tasks should take minutes, not hours.
+3. **SCOPE**: Do not hallucinate features not in the proposal. Stick to the PDF content but filtered for ${stackName}.
+
+Generate a list of tasks. For each task, provide:
+1. title: Clear task title
+2. description: Detailed description
 3. priority: "high", "medium", or "low"
-4. estimatedHours: Estimated hours (integer)
-5. estimatedMinutes: Estimated additional minutes (0-59)
-6. daysFromStart: Number of working days from the start date when this task's due date should be
+4. estimatedHours: Integer (0 if < 1h)
+5. estimatedMinutes: Integer (0-59)
+6. daysFromStart: Integer (working days offset)
 
-Important guidelines:
-- Break complex features into smaller, manageable tasks
-- Include setup, development, testing, and deployment tasks
-- Order tasks logically (dependencies first)
-- Adjust all time estimates according to the Time Allocation Mode specified above
-- Include tasks for UI/UX implementation, backend logic, API integration, testing, and documentation
-- Each task should be achievable within 1-8 hours ideally
-
-Respond ONLY with a JSON array. No markdown, no code blocks, no explanation. Just the raw JSON array.
-Example: [{"title":"Setup project","description":"Initialize project with ${stackName}","priority":"high","estimatedHours":2,"estimatedMinutes":0,"daysFromStart":0}]`;
+Respond ONLY with a JSON array. No markdown, no code blocks.
+Example: [{"title":"Setup ${stackName} project","description":"Initialize project structure","priority":"high","estimatedHours":0,"estimatedMinutes":45,"daysFromStart":0}]`;
 
             const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
                 method: 'POST',
