@@ -20,7 +20,18 @@ export default function Tasks() {
     const [showModal, setShowModal] = useState(false);
     const [viewMode, setViewMode] = useState('board');
     const [searchQuery, setSearchQuery] = useState('');
-    const [filterAssignee, setFilterAssignee] = useState('all');
+    const [filterAssignee, setFilterAssignee] = useState(user?.$id || 'all');
+
+    // Track if we've set the default filter
+    const defaultFilterSet = useRef(!!user?.$id);
+
+    // Auto-select "Me" filter when user loads
+    useEffect(() => {
+        if (user?.$id && !defaultFilterSet.current) {
+            setFilterAssignee(user.$id);
+            defaultFilterSet.current = true;
+        }
+    }, [user]);
     const [filterPriority, setFilterPriority] = useState('all');
     const [filterProject, setFilterProject] = useState('all');
     const [showFilters, setShowFilters] = useState(false);
