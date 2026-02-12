@@ -89,7 +89,7 @@ export default function Tasks() {
             if (event.includes('.create')) {
                 setTasks(prev => {
                     if (prev.find(t => t.$id === doc.$id)) return prev;
-                    return [doc, ...prev];
+                    return [...prev, doc];
                 });
             } else if (event.includes('.update')) {
                 setTasks(prev => prev.map(t => t.$id === doc.$id ? doc : t));
@@ -104,7 +104,7 @@ export default function Tasks() {
         setLoading(true);
         try {
             const [tasksRes, projectsRes, membersRes, statusesRes, timeEntriesRes] = await Promise.all([
-                databases.listDocuments(DATABASE_ID, COLLECTIONS.TASKS, [Query.orderDesc('$createdAt'), Query.limit(200)]),
+                databases.listDocuments(DATABASE_ID, COLLECTIONS.TASKS, [Query.orderAsc('$createdAt'), Query.limit(200)]),
                 databases.listDocuments(DATABASE_ID, COLLECTIONS.PROJECTS),
                 databases.listDocuments(DATABASE_ID, COLLECTIONS.TEAM_MEMBERS),
                 databases.listDocuments(DATABASE_ID, COLLECTIONS.TASK_STATUSES, [Query.orderAsc('order')]),
