@@ -138,7 +138,7 @@ export default function Tasks() {
     const activeProject = activeProjectId ? projects.find(p => p.$id === activeProjectId) : null;
 
     const filteredTasks = useMemo(() => {
-        return tasks.filter(task => {
+        const result = tasks.filter(task => {
             // Filter out tasks with invalid/deleted statuses (orphans)
             // This ensures List view matches Board view (which only shows valid columns)
             if (statuses.length > 0) {
@@ -161,6 +161,20 @@ export default function Tasks() {
             const matchesAssignee = filterAssignee === 'all' || task.assigneeId === filterAssignee;
             const matchesPriority = filterPriority === 'all' || task.priority === filterPriority;
             return matchesSearch && matchesAssignee && matchesPriority;
+        });
+
+        // Sort by Due Date (Ascending) -> Earliest deadline first
+        // If no due date, push to bottom (Infinity)
+        // Secondary sort: Created At (Oldest first)
+        return result.sort((a, b) => {
+            const dateA = a.dueDate ? new Date(a.dueDate).getTime() : Infinity;
+            const dateB = b.dueDate ? new Date(b.dueDate).getTime() : Infinity;
+
+            if (dateA !== dateB) {
+                return dateA - dateB;
+            }
+            // If same due date, sort by creation time (chronological)
+            return new Date(a.$createdAt).getTime() - new Date(b.$createdAt).getTime();
         });
     }, [tasks, statuses, searchQuery, filterAssignee, filterPriority, isManager, user, activeProjectId]);
 
