@@ -5,8 +5,8 @@ import { CheckSquare, Eye, EyeOff, CheckCircle, AlertCircle } from 'lucide-react
 
 // Create a fresh client for the set-password page (user may not be logged in)
 const client = new Client()
-    .setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT)
-    .setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID);
+    .setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT || 'https://fra.cloud.appwrite.io/v1')
+    .setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID || '698ce9a3002b537b3451');
 
 const functions = new Functions(client);
 const FUNCTION_ID = 'team-invite';
