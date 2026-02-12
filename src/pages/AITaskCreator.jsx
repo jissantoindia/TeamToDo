@@ -9,7 +9,8 @@ import {
 } from 'lucide-react';
 
 const TIME_MODES = [
-    { id: 'very_tight', label: '🔥 Very Tight', desc: 'Minimal buffer, experienced developer', promptHint: 'Give very aggressive, minimal time estimates. Assume the developer is highly experienced and fast. Keep estimates 30-40% below normal. Each task should be squeezed to the absolute minimum realistic time.' },
+    { id: 'wipe_coding', label: '🤖 Wipe Coding', desc: 'AI Agent Speed (Extremely Fast)', promptHint: 'Assume the developer is using an AI coding agent (Wipe Coding) that handles 90% of the implementation. Development time is drastically reduced. Give EXTREMELY aggressive estimates (70-80% less than normal). Most tasks should take 15-45 minutes max.' },
+    { id: 'very_tight', label: '🔥 Very Tight', desc: 'Minimal buffer, experienced developer', promptHint: 'Give very aggressive, minimal time estimates. Assume the developer is highly experienced and fast. Keep estimates 40-50% below normal. Each task should be squeezed to the absolute minimum realistic time.' },
     { id: 'tight', label: '⚡ Tight', desc: 'Less buffer, efficient pace', promptHint: 'Give slightly tight time estimates with minimal buffer. Assume an efficient developer who works at a good pace. Keep estimates about 15-20% below normal.' },
     { id: 'normal', label: '⚖️ Balanced', desc: 'Standard estimates with reasonable buffer', promptHint: 'Give standard, realistic time estimates with a reasonable buffer for unexpected issues. Balance quality and speed.' },
     { id: 'relaxed', label: '🌿 Relaxed', desc: 'More buffer for quality & learning', promptHint: 'Give generous time estimates with extra buffer for code review, testing, learning, and quality assurance. Add about 20-30% more time than normal.' },
