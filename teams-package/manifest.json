@@ -1,0 +1,45 @@
+{
+    "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.16/MicrosoftTeams.schema.json",
+    "manifestVersion": "1.16",
+    "version": "1.0.0",
+    "id": "aa10f248-116e-4360-8d12-360f4e1390a0",
+    "packageName": "com.ebsteqrix.teamtodo",
+    "developer": {
+        "name": "EbstEqrix",
+        "websiteUrl": "https://tdo.ebsteqrix.com",
+        "privacyUrl": "https://tdo.ebsteqrix.com",
+        "termsOfUseUrl": "https://tdo.ebsteqrix.com"
+    },
+    "icons": {
+        "color": "color.png",
+        "outline": "outline.png"
+    },
+    "name": {
+        "short": "TeamToDo",
+        "full": "TeamToDo Project Manager"
+    },
+    "description": {
+        "short": "Manage projects, tasks, and team attendance seamlessly.",
+        "full": "TeamToDo is a comprehensive project management tool that helps you track tasks, manage team attendance, generate AI-powered task lists, and stay organized. Access your personal dashboard directly from Teams."
+    },
+    "accentColor": "#4F46E5",
+    "staticTabs": [
+        {
+            "entityId": "dashboard",
+            "name": "Dashboard",
+            "contentUrl": "https://tdo.ebsteqrix.com/teams",
+            "websiteUrl": "https://tdo.ebsteqrix.com/teams",
+            "scopes": [
+                "personal"
+            ]
+        }
+    ],
+    "permissions": [
+        "identity",
+        "messageTeamMembers"
+    ],
+    "validDomains": [
+        "tdo.ebsteqrix.com",
+        "cloud.appwrite.io"
+    ]
+}
