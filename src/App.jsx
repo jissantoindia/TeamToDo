@@ -38,6 +38,7 @@ import AITaskCreator from './pages/AITaskCreator';
 import SetPassword from './pages/SetPassword';
 import Holidays from './pages/Holidays';
 import Notifications from './pages/Notifications';
+import TeamsApp from './pages/TeamsApp';
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/teams" element={<TeamsApp />} />
           <Route path="/set-password" element={<SetPassword />} />
 
           <Route path="/" element={

@@ -150,10 +150,25 @@ export function AuthProvider({ children }) {
         }
     }
 
+    async function loginWithMicrosoft() {
+        try {
+            // Initiates OAuth flow. Appwrite will redirect to Microsoft, then back to success URL.
+            // Using window.location.href ensures we return to the current page (e.g. /teams)
+            account.createOAuth2Session(
+                'microsoft',
+                window.location.href,
+                window.location.href
+            );
+        } catch (error) {
+            console.error("Microsoft Login failed:", error);
+        }
+    }
+
     const value = {
         user,
         loading,
         login,
+        loginWithMicrosoft,
         signup,
         logout,
         checkUserStatus,
